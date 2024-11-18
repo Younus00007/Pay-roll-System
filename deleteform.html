@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Employee</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #141e30, #243b55);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: #fff;
+        }
+        .delete-form {
+            background: rgba(0, 0, 0, 0.8);
+            width: 400px;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+        .delete-form h1 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #FFD700;
+            text-transform: uppercase;
+        }
+        .delete-form input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+            background: #333;
+            color: #fff;
+        }
+        .delete-form input[type="text"]::placeholder {
+            color: #aaa;
+        }
+        .delete-form button {
+            padding: 12px 25px;
+            background: #FFD700;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            color: #000;
+            text-transform: uppercase;
+            transition: transform 0.2s ease, background 0.2s ease;
+        }
+        .delete-form button:hover {
+            background: #FFC107;
+            transform: scale(1.05);
+        }
+        .delete-form #message {
+            margin-top: 20px;
+            font-size: 14px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="delete-form">
+        <h1>Delete Employee</h1>
+        <input type="text" id="empId" placeholder="Enter Employee ID">
+        <button onclick="deleteEmployee()">Delete</button>
+        <p id="message"></p>
+    </div>
+
+    <script>
+        async function deleteEmployee() {
+            const empId = document.getElementById('empId').value;
+            const messageElement = document.getElementById('message');
+
+            if (!empId) {
+                messageElement.textContent = "Please enter an Employee ID.";
+                messageElement.style.color = "red";
+                return;
+            }
+
+            try {
+                const response = await fetch(`/delete/${empId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (response.ok) {
+                    const result = await response.text();
+                    messageElement.textContent = result;
+                    messageElement.style.color = "green";
+                } else {
+                    messageElement.textContent = `Error: ${await response.text()}`;
+                    messageElement.style.color = "red";
+                }
+            } catch (error) {
+                messageElement.textContent = "Failed to delete employee.";
+                messageElement.style.color = "red";
+            }
+        }
+    </script>
+
+</body>
+</html>

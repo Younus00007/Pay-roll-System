@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administrator Process</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #0f0c29, #302b63, #24243e);
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .admin-container {
+            width: 100%;
+            max-width: 800px;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 50px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+        }
+        .admin-container h1 {
+            font-size: 32px;
+            margin-bottom: 30px;
+            color: #FFD700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .admin-container button {
+            padding: 15px 25px;
+            margin: 15px 10px;
+            border: none;
+            border-radius: 8px;
+            background: #FFD700;
+            color: #000;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+        }
+        .admin-container button:hover {
+            background: #FFC107;
+            transform: scale(1.05);
+        }
+        .admin-container button:last-of-type {
+            background: #f44336;
+            color: #fff;
+        }
+        .admin-container button:last-of-type:hover {
+            background: #d32f2f;
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <h1>Administrator Process</h1>
+        <button type="button" onclick="window.location.href='employeeform.html';">Add Employee to Form</button><br>
+        <button type="button" onclick="window.location.href='payrollprocess.html';">Pay Roll Process</button><br>
+        <button type="button" onclick="window.location.href='deleteform.html';">Deleting Employee Process</button><br>
+        <button type="button" onclick="window.location.href='login.html';">Back</button>
+        <button type="button">Logout</button>
+    </div>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Process Payroll</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: #ffffff;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .payroll-container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 30px 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            width: 100%;
+            max-width: 400px;
+        }
+        .payroll-container h1 {
+            font-size: 26px;
+            margin-bottom: 20px;
+            color: #FFD700;
+        }
+        .payroll-container button {
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #ffffff;
+            background: #4CAF50;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .payroll-container button:hover {
+            background: #45a049;
+            transform: scale(1.05);
+        }
+        .payroll-container .result {
+            margin-top: 20px;
+            font-size: 16px;
+            color: #FFD700;
+        }
+        .payroll-container .result p {
+            margin: 5px 0;
+            font-size: 14px;
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="payroll-container">
+        <h1>Process Payroll</h1>
+        <button onclick="processPayroll()">Process Payroll</button>
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        async function processPayroll() {
+            const resultElement = document.getElementById('result');
+            resultElement.textContent = "Processing payroll...";
+
+            try {
+                const response = await fetch('/processPayroll');
+                if (response.ok) {
+                    const data = await response.json();
+                    resultElement.textContent = "Payroll processed successfully!";
+                    data.updatedPayroll.forEach(emp => {
+                        resultElement.innerHTML += `<p>Employee ID: ${emp.emp_id} - Net Salary: ${emp.net_salary}</p>`;
+                    });
+                } else {
+                    resultElement.textContent = "Failed to process payroll.";
+                }
+            } catch (error) {
+                resultElement.textContent = "Error processing payroll.";
+                console.error("Payroll processing error:", error);
+            }
+        }
+    </script>
+
+</body>
+</html>

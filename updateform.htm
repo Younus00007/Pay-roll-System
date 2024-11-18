@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Employee</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #1c1c1c, #444);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: #fff;
+        }
+        .update-form {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 30px 40px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+        }
+        .update-form h1 {
+            margin-bottom: 20px;
+            color: #FFD700;
+            font-size: 24px;
+            text-transform: uppercase;
+        }
+        .update-form input[type="text"],
+        .update-form input[type="date"],
+        .update-form input[type="number"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            border: 1px solid #333;
+            background: #222;
+            color: #fff;
+            font-size: 14px;
+        }
+        .update-form input::placeholder {
+            color: #aaa;
+        }
+        .update-form button {
+            padding: 12px 30px;
+            background: #FFD700;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            color: #000;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+        }
+        .update-form button:hover {
+            background: #FFC107;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+        }
+        .update-form p {
+            margin-top: 15px;
+            font-size: 14px;
+            font-weight: bold;
+            color: #FFD700;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="update-form">
+        <h1>Update Employee</h1>
+        <input type="text" id="empId" placeholder="Employee ID (Required)" required>
+        <input type="text" id="name" placeholder="Name">
+        <input type="text" id="designation" placeholder="Designation">
+        <input type="date" id="dob" placeholder="Date of Birth">
+        <input type="text" id="gender" placeholder="Gender">
+        <input type="text" id="address" placeholder="Address">
+        <input type="text" id="contact" placeholder="Contact">
+        <input type="number" id="basSal" placeholder="Basic Salary">
+        <input type="number" id="grossPay" placeholder="Gross Pay">
+        <input type="text" id="deduction" placeholder="Deduction">
+        <input type="number" id="netSalary" placeholder="Net Salary">
+        <button onclick="updateEmployee()">Update Employee</button>
+        <p id="message"></p>
+    </div>
+
+    <script>
+        async function updateEmployee() {
+            const empId = document.getElementById('empId').value;
+            const name = document.getElementById('name').value;
+            const designation = document.getElementById('designation').value;
+            const dob = document.getElementById('dob').value;
+            const gender = document.getElementById('gender').value;
+            const address = document.getElementById('address').value;
+            const contact = document.getElementById('contact').value;
+            const basSal = document.getElementById('basSal').value;
+            const grossPay = document.getElementById('grossPay').value;
+            const deduction = document.getElementById('deduction').value;
+            const netSalary = document.getElementById('netSalary').value;
+            const messageElement = document.getElementById('message');
+
+            if (!empId) {
+                messageElement.textContent = "Employee ID is required.";
+                messageElement.style.color = "red";
+                return;
+            }
+
+            const updatedData = {
+                name,
+                designation,
+                dob,
+                gender,
+                address,
+                contact,
+                bas_sal: basSal,
+                gross_pay: grossPay,
+                deduction,
+                net_salary: netSalary
+            };
+
+            try {
+                const response = await fetch(`/update/${empId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(updatedData)
+                });
+
+                if (response.ok) {
+                    messageElement.textContent = "Employee updated successfully.";
+                    messageElement.style.color = "green";
+                } else {
+                    messageElement.textContent = `Error: ${await response.text()}`;
+                    messageElement.style.color = "red";
+                }
+            } catch (error) {
+                messageElement.textContent = "Failed to update employee.";
+                messageElement.style.color = "red";
+            }
+        }
+    </script>
+
+</body>
+</html>
